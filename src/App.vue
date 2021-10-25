@@ -1,26 +1,58 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <ModalBox ref="modal"></ModalBox>
+  <Header :amount="amount"></Header>
+  <div class="product">
+    <div class="container">
+      <Box @click="test($event)"></Box>
+      <Text @passData="passData($event)"></Text>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import ModalBox from "@/components/modal.vue";
+import Header from "@/components/Header.vue";
+import Box from "@/components/Box.vue";
+import Text from "@/components/Text.vue";
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    ModalBox,
+    Header,
+    Box,
+    Text,
+  },
+  data() {
+    return {
+      amount: 0,
+    };
+  },
+  methods: {
+    passData(amount) {
+      this.amount = amount;
+    },
+    test(event) {
+      if (event.target.classList[0] === `main`) {
+        this.$refs.modal.display();
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+@import "./assets/scss/main.scss";
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 0px !important;
+  }
+}
+.container {
+  @include display();
+  padding-top: 50px;
+  .Text {
+    align-self: center;
+  }
 }
 </style>
